@@ -1,16 +1,19 @@
-const mixedArray = [12, -7, 45, "hello", -23, 89, "world", -3];
+// char count problem
+let str = "hello everyone";
+let obj = {};
 
-let max = -Infinity;
-let secondmax = -Infinity;
-let min = Infinity;
-
-for (let x of mixedArray) {
-  if (typeof x === "number") {
-    if (x > max) {
-      secondmax = max;
-      max = x;
+function charCount(str) {
+  for (let x of str) {
+    if (x !== " ") {
+      if (!obj.hasOwnProperty(x)) {
+        obj[x] = 1;
+      } else {
+        obj[x] = obj[x] + 1;
+      }
     }
   }
+
+  return obj;
 }
-console.log("Max value is", max);
-console.log("Second Max is", secondmax);
+
+console.log(charCount(str));
