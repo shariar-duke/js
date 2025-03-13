@@ -1,13 +1,22 @@
-let arr = [4, 12, 5, -1, 6, 45, 2, 6, 8];
+function selectionSort(arr) {
+  let n = arr.length;
 
-for (let x = 0; x < arr.length - 1; x++) {
-  // Outer loop
-  for (let y = 0; y < arr.length - 1 - x; y++) {
-    // Inner loop optimized
-    if (arr[y] > arr[y + 1]) {
-      [arr[y], arr[y + 1]] = [arr[y + 1], arr[y]];
+  for (let i = 0; i < n - 1; i++) {
+    let minIndex = i; // Assume the first element is the smallest
+
+    for (let j = i + 1; j < n; j++) {
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j; // Update minIndex if a smaller element is found
+      }
+    }
+
+    // Swap only once per pass (if minIndex changed)
+    if (minIndex != i) {
+      [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
     }
   }
+
+  return arr;
 }
 
-console.log(arr);
+console.log(selectionSort([23, 12, 6, -5, 98]));
