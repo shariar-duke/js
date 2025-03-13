@@ -1,39 +1,27 @@
-class BankAccount {
-  #balance; // Private property
-
-  constructor(accountHolder, balance) {
-    this.accountHolder = accountHolder;
-    this.#balance = balance; // Private property initialization
+class Animal {
+  constructor(name) {
+    this.name = name;
   }
 
-  deposit(amount) {
-    if (amount > 0) {
-      this.#balance += amount;
-      console.log(`Deposited ${amount}. New balance: ${this.#balance}`);
-    } else {
-      console.log("Invalid deposit amount");
-    }
-  }
-
-  withdraw(amount) {
-    if (amount > 0 && amount <= this.#balance) {
-      this.#balance -= amount;
-      console.log(`Withdrawn ${amount}. Remaining balance: ${this.#balance}`);
-    } else {
-      console.log("Invalid withdrawal amount");
-    }
-  }
-
-  getBalance() {
-    return `Balance for ${this.accountHolder}: ${this.#balance}`;
+  makeSound() {
+    console.log("Some generic animal sound...");
   }
 }
 
-const account = new BankAccount("John Doe", 1000);
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);
+    this.breed = breed;
+  }
 
-// Trying to modify balance directly
-// ❌ account.#balance = -5000; // ERROR: Private field is not accessible
+  makeSound() {
+    super.makeSound(); // ✅ Calls the parent class method
+    console.log("Woof! Woof!"); // ✅ Additional behavior for Dog
+  }
+}
 
-account.deposit(500); // ✅ Works as expected
-account.withdraw(200); // ✅ Works as expected
-console.log(account.getBalance()); // ✅ Safely retrieves balance
+const dog = new Dog("Buddy", "Golden Retriever");
+dog.makeSound();
+// Outputs:
+// Some generic animal sound...  (from Animal)
+// Woof! Woof!  (from Dog)
