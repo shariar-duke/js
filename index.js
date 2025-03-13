@@ -1,26 +1,13 @@
-let arr = [3, 5, 6, 9, 44, 56, 99, 102, 150, 170];
+let arr = [4, 12, 5, -1, 6, 45, 2, 6, 8];
 
-function binarySearch(arr, num) {
-  if (arr.length < 1) {
-    return -1;
-  }
-
-  let start = 0;
-  let end = arr.length - 1;
-  let mid;
-
-  while (start <= end) {
-    mid = Math.floor((start + end) / 2);
-    if (arr[mid] === num) {
-      return mid;
-    } else if (num > mid) {
-      start = mid + 1;
-    } else if (num < mid) {
-      end = mid - 1;
+for (let x = 0; x < arr.length - 1; x++) {
+  // Outer loop
+  for (let y = 0; y < arr.length - 1 - x; y++) {
+    // Inner loop optimized
+    if (arr[y] > arr[y + 1]) {
+      [arr[y], arr[y + 1]] = [arr[y + 1], arr[y]]; // Swap using destructuring
     }
   }
-
-  return -1; // jode number khuje na pay then eta
 }
 
-console.log(binarySearch(arr, 170)); // Output: 9
+console.log(arr);
