@@ -5,7 +5,7 @@ for (let x = 0; x < arr.length - 1; x++) {
   for (let y = 0; y < arr.length - 1 - x; y++) {
     // Inner loop optimized
     if (arr[y] > arr[y + 1]) {
-      [arr[y], arr[y + 1]] = [arr[y + 1], arr[y]]; // Swap using destructuring
+      [arr[y], arr[y + 1]] = [arr[y + 1], arr[y]];
     }
   }
 }
