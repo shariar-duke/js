@@ -1,16 +1,17 @@
-// Two sum Problme
-let nums = [2, 7, 11, 15];
-let target = 9;
-let result = [];
+function twoSum(nums, target) {
+  let map = {}; // Stores numbers and their indices
 
-for (let x = 0; x < nums.length; x++) {
-  for (let y = x + 1; y < nums.length; y++) {
-    if (nums[x] + nums[y] == target) {
-      result.push(x);
-      result.push(y);
-      break;
+  for (let i = 0; i < nums.length; i++) {
+    let complement = target - nums[i];
+
+    if (map.hasOwnProperty(complement)) {
+      return [map[complement], i]; // Found the pair
     }
+
+    map[nums[i]] = i; // Store index of current number
   }
+
+  return []; // No solution found
 }
 
-console.log(result);
+console.log(twoSum([2, 7, 11, 15], 9)); // Output: [0, 1]
