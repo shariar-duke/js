@@ -1,17 +1,19 @@
-function twoSum(nums, target) {
-  let map = {}; // Stores numbers and their indices
-
-  for (let i = 0; i < nums.length; i++) {
-    let complement = target - nums[i];
-
-    if (map.hasOwnProperty(complement)) {
-      return [map[complement], i]; // Found the pair
-    }
-
-    map[nums[i]] = i; // Store index of current number
+class Stack {
+  constructor() {
+    this.arr = [];
   }
 
-  return []; // No solution found
+  push(num) {
+    this.arr.push(num);
+  }
+
+  showStack() {
+    return this.arr;
+  }
 }
 
-console.log(twoSum([2, 7, 11, 15], 9)); // Output: [0, 1]
+let stack = new Stack();
+stack.push(5);
+stack.push(12);
+
+console.log(stack.showStack());
