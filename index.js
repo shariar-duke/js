@@ -1,22 +1,16 @@
-function selectionSort(arr) {
-  let n = arr.length;
+// Two sum Problme
+let nums = [2, 7, 11, 15];
+let target = 9;
+let result = [];
 
-  for (let i = 0; i < n - 1; i++) {
-    let minIndex = i; // Assume the first element is the smallest
-
-    for (let j = i + 1; j < n; j++) {
-      if (arr[j] < arr[minIndex]) {
-        minIndex = j; // Update minIndex if a smaller element is found
-      }
-    }
-
-    // Swap only once per pass (if minIndex changed)
-    if (minIndex != i) {
-      [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+for (let x = 0; x < nums.length; x++) {
+  for (let y = x + 1; y < nums.length; y++) {
+    if (nums[x] + nums[y] == target) {
+      result.push(x);
+      result.push(y);
+      break;
     }
   }
-
-  return arr;
 }
 
-console.log(selectionSort([23, 12, 6, -5, 98]));
+console.log(result);
