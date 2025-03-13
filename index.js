@@ -1,104 +1,149 @@
-// Node class to represent each element in the linked list
+// Node class for Doubly Linked List
 class Node {
   constructor(data) {
-    this.data = data; // Value of the node
-    this.next = null; // Pointer to the next node, initially null
+    this.data = data; // Node value
+    this.next = null; // Pointer to the next node
+    this.prev = null; // Pointer to the previous node
   }
 }
 
-// Singly Linked List class to manage nodes
-class SinglyLinkedList {
+// Doubly Linked List class
+class DoublyLinkedList {
   constructor() {
-    this.head = null; // Head of the list, initially null
+    this.head = null; // Points to the first node
+    this.tail = null; // Points to the last node
   }
 
-  // Add a node to the end of the list (Insert)
+  // Add a node at the end (Append)
   append(data) {
     const newNode = new Node(data);
 
-    // If the list is empty, make the new node the head
-    if (this.head === null) {
-      this.head = newNode;
+    if (!this.head) {
+      this.head = this.tail = newNode; // First node becomes head and tail
       return;
     }
 
-    // Otherwise, traverse the list and append the new node at the end
-    let current = this.head;
-    while (current.next !== null) {
-      current = current.next;
-    }
-    current.next = newNode;
+    this.tail.next = newNode;
+    newNode.prev = this.tail;
+    this.tail = newNode; // Update tail
   }
 
-  // Print the list (for visualization)
-  printList() {
-    let current = this.head;
-    let result = [];
-    while (current !== null) {
-      result.push(current.data);
-      current = current.next;
-    }
-    console.log(result.join(" -> "));
-  }
-
-  // Insert at the beginning of the list
+  // Add a node at the beginning (Prepend)
   prepend(data) {
     const newNode = new Node(data);
+
+    if (!this.head) {
+      this.head = this.tail = newNode; // First node becomes head and tail
+      return;
+    }
+
     newNode.next = this.head;
-    this.head = newNode;
+    this.head.prev = newNode;
+    this.head = newNode; // Update head
   }
 
   // Delete a node by value
   delete(data) {
-    if (this.head === null) return;
+    if (!this.head) return; // List is empty
 
-    // If the head node itself contains the data
+    // If head contains the data
     if (this.head.data === data) {
-      this.head = this.head.next;
+      // If it's the only node in the list
+      if (this.head === this.tail) {
+        this.head = this.tail = null;
+      } else {
+        this.head = this.head.next;
+        this.head.prev = null;
+      }
       return;
     }
 
     let current = this.head;
-    while (current.next !== null && current.next.data !== data) {
+    while (current && current.data !== data) {
       current = current.next;
     }
 
-    // If the data is found
-    if (current.next !== null) {
-      current.next = current.next.next;
+    // If node not found
+    if (!current) return;
+
+    // If deleting the last node
+    if (current === this.tail) {
+      this.tail = this.tail.prev;
+      if (this.tail) this.tail.next = null; // Fix stale reference
+      return;
     }
+
+    // Remove the node in the middle
+    current.prev.next = current.next;
+    current.next.prev = current.prev;
   }
 
   // Search for a value in the list
   search(data) {
     let current = this.head;
-    while (current !== null) {
-      if (current.data === data) {
-        return true; // Data found
-      }
+    while (current) {
+      if (current.data === data) return true;
       current = current.next;
     }
-    return false; // Data not found
+    return false;
+  }
+
+  // Print the list from head to tail
+  printList() {
+    if (!this.head) {
+      console.log("Forward: List is empty");
+      return;
+    }
+
+    let current = this.head;
+    let result = [];
+
+    while (current) {
+      result.push(current.data);
+      current = current.next;
+    }
+
+    console.log("Forward:", result.join(" ⇄ "));
+  }
+
+  // Print the list in reverse (tail to head)
+  printReverse() {
+    if (!this.tail) {
+      console.log("Reverse: List is empty");
+      return;
+    }
+
+    let current = this.tail;
+    let result = [];
+
+    while (current) {
+      result.push(current.data);
+      current = current.prev;
+    }
+
+    console.log("Reverse:", result.join(" ⇄ "));
   }
 }
 
 // Example usage:
-const list = new SinglyLinkedList();
+const dll = new DoublyLinkedList();
 
-list.append(10);
-list.append(20);
-list.append(30);
+dll.append(10);
+dll.append(20);
+dll.append(30);
+console.log("List after appending:");
+dll.printList(); // 10 ⇄ 20 ⇄ 30
 
-console.log("List after appending elements:");
-list.printList(); // Output: 10 -> 20 -> 30
-
-list.prepend(5);
+dll.prepend(5);
 console.log("List after prepending 5:");
-list.printList(); // Output: 5 -> 10 -> 20 -> 30
+dll.printList(); // 5 ⇄ 10 ⇄ 20 ⇄ 30
 
-list.delete(20);
+dll.delete(20);
 console.log("List after deleting 20:");
-list.printList(); // Output: 5 -> 10 -> 30
+dll.printList(); // 5 ⇄ 10 ⇄ 30
 
-console.log("Searching for 10 in the list:", list.search(10)); // Output: true
-console.log("Searching for 100 in the list:", list.search(100)); // Output: false
+console.log("Searching for 10:", dll.search(10)); // true
+console.log("Searching for 100:", dll.search(100)); // false
+
+console.log("Reverse Order:");
+dll.printReverse(); // 30 ⇄ 10 ⇄ 5
