@@ -43,6 +43,26 @@ class BinarySearchTree {
       }
     }
   }
+
+  findNode(value) {
+    let currentNode = this.root;
+
+    while (currentNode) {
+      if (currentNode.value === value) {
+        return true;
+      }
+      // Move left if value is smaller
+      if (value < currentNode.value) {
+        currentNode = currentNode.leftChild;
+      }
+      // Move right if value is greater
+      else {
+        currentNode = currentNode.rightChild;
+      }
+    }
+
+    return false; // Node not found
+  }
 }
 
 // Example usage
@@ -50,6 +70,9 @@ const bst = new BinarySearchTree();
 console.log(bst.addChild(10)); // Node 10 added as root
 console.log(bst.addChild(5)); // Node 5 added to the left of 10
 console.log(bst.addChild(15)); // Node 15 added to the right of 10
-console.log(bst.addChild(5)); // Duplicate Node not allowed
+console.log(bst.addChild(25)); // Duplicate Node not allowed
 
-console.log(bst.root);
+// find a value :
+console.log("The node you are trying to find is", bst.findNode(5));
+
+// console.log(bst.root);
